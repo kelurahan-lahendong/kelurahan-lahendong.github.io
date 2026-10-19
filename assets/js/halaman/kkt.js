@@ -2,7 +2,7 @@
    Halaman ini tidak ada di menu atas; tautannya ada di footer: tombol, Tautan Cepat, baris kredit (ui.js).
 
    Berbeda dengan halaman lain, data KKT TIDAK diambil dari spreadsheet — cukup ubah DATA_KKT di bawah,
-   lalu jalankan python3 tools/versi_aset.py, commit, dan push. */
+   lalu jalankan python3 ../kelurahan-lahendong-tools/versi_aset.py, commit, dan push. */
 
 const DATA_KKT = {
   periode: "", // mis. "Juli – Agustus 2026"; kosong = tidak ditampilkan
@@ -22,7 +22,7 @@ const DATA_KKT = {
      - peran: "Koordinator…" ditonjolkan di kepala kolom bidang; "Anggota" tampil di daftar bawahnya.
      - fakultas: tampil di kartu; dihitung untuk angka "Fakultas asal".
      - foto: otomatis img/kkt/<nim>.webp (mis. img/kkt/230211060074.webp) — mengganti foto cukup menimpa
-       berkas itu (tools/pasang_foto.py). Berkas tidak ada = monogram inisial. Pas foto 3:4 (600 × 800 px),
+       berkas itu (../kelurahan-lahendong-tools/pasang_foto.py). Berkas tidak ada = monogram inisial. Pas foto 3:4 (600 × 800 px),
        wajah di sepertiga atas; foto dengan rasio lain dipotong otomatis dari tengah-atas. */
   anggota: [
     { bidang: "Pengurus Inti", peran: "Koordinator Posko", nama: "Fidelia Tishri Kololy", nim: "231011030018", fakultas: "Fakultas Matematika dan Ilmu Pengetahuan Alam" },

@@ -1,7 +1,7 @@
 # Folder data/: hanya template spreadsheet yang di-commit. Foto & video asli (berat) disimpan di sini
-# lalu diproses dengan tools/siapkan_foto.py / siapkan_video.py; hasilnya di img/.
+# lalu diproses dengan ../kelurahan-lahendong-tools/siapkan_foto.py / siapkan_video.py; hasilnya di img/.
 data/*
 !data/template-data-lahendong.xlsx
 
-# Cache Python dari tools/
+# Cache Python dari skrip pembantu
 __pycache__/

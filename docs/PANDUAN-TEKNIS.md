@@ -71,10 +71,22 @@ kelurahan-lahendong.github.io/
 │   └── umum/               placeholder.webp (foto gagal dimuat), peta-wilayah.png (bila ada)
 │
 ├── data/                   template-data-lahendong.xlsx (foto/video asli juga di sini, tidak di-commit)
-├── tools/                  skrip Python pembantu (lihat tabel di bawah)
 ├── docs/                   PANDUAN-TEKNIS.md (berkas ini), DESIGN-SPEC.md
 └── README.md               panduan admin: mengelola spreadsheet & foto
 ```
+
+Skrip Python pembantu **tidak** ada di repo ini (agar tidak ikut terbit di GitHub Pages). Simpan di folder
+`kelurahan-lahendong-tools/` **di sebelah** folder repo, lalu jalankan dari akar repo:
+
+```
+D:\Active\
+├── kelurahan-lahendong.github.io\   repo situs (folder ini)
+└── kelurahan-lahendong-tools\       buat_template.py, siapkan_foto.py, pasang_foto.py, siapkan_video.py,
+                                     versi_aset.py, pengalihan-url-lama\
+```
+
+`buat_template.py`, `pasang_foto.py`, dan `versi_aset.py` mencari repo di folder sebelahnya yang bernama
+`kelurahan-lahendong.github.io`, jadi kedua nama folder itu jangan diubah.
 
 | Berkas | Kapan diubah |
 |---|---|
@@ -86,11 +98,11 @@ kelurahan-lahendong.github.io/
 | `assets/js/komponen.js` | Menambah foto wisata/aparat, mengubah potongan bersama |
 | `assets/js/halaman/kkt.js` | Mengubah daftar mahasiswa KKT (`DATA_KKT` — satu-satunya data yang ditulis di kode) |
 | `assets/js/halaman/cek-data.js` | Menambah aturan pemeriksaan sheet (`ATURAN_TAB`) |
-| `tools/buat_template.py` | Membuat ulang template `.xlsx` dari `SKEMA` & `DATA_DUMMY` (butuh LibreOffice) |
-| `tools/siapkan_foto.py` | Mengolah satu foto ke WebP: `kartu`, `latar`, `galeri`, `hero`, `potret` |
-| `tools/pasang_foto.py` | Memasang banyak foto sekaligus dari satu folder, menurut nama berkas |
-| `tools/siapkan_video.py` | Mengolah video latar (versi layar lebar, HP, poster) |
-| `tools/versi_aset.py` | Memberi penanda versi CSS/JS di semua HTML — jalankan sebelum commit |
+| `../kelurahan-lahendong-tools/buat_template.py` | Membuat ulang template `.xlsx` dari `SKEMA` & `DATA_DUMMY` (butuh LibreOffice) |
+| `../kelurahan-lahendong-tools/siapkan_foto.py` | Mengolah satu foto ke WebP: `kartu`, `latar`, `galeri`, `hero`, `potret` |
+| `../kelurahan-lahendong-tools/pasang_foto.py` | Memasang banyak foto sekaligus dari satu folder, menurut nama berkas |
+| `../kelurahan-lahendong-tools/siapkan_video.py` | Mengolah video latar (versi layar lebar, HP, poster) |
+| `../kelurahan-lahendong-tools/versi_aset.py` | Memberi penanda versi CSS/JS di semua HTML — jalankan sebelum commit |
 
 Template `data/template-data-lahendong.xlsx`: semua sel berformat Teks biasa (termasuk 100 baris kosong siap
 isi), judul kolom dibekukan dan diberi catatan arti + contoh, kolom pertama (wajib) berwarna hijau tua,
@@ -329,17 +341,17 @@ Foto/video asli disimpan di `data/` (tidak di-commit); hanya hasil olahan di `im
 #   hero-<halaman>.jpg → img/hero/<halaman>.webp + -hp.webp
 #   <nim>.png          → img/kkt/<nim>.webp
 #   dosenpemlap.jpg    → img/kkt/dosenpemlap.webp
-python3 tools/pasang_foto.py data/unduhan-drive/
+python3 ../kelurahan-lahendong-tools/pasang_foto.py data/unduhan-drive/
 
 # Satu foto
-python3 tools/siapkan_foto.py ASLI img/wisata/<kode>/kartu.webp --jenis kartu    # 3:2, 1200 × 800
-python3 tools/siapkan_foto.py ASLI img/wisata/<kode>/foto-3.webp --jenis galeri  # sisi terpanjang 1600
-python3 tools/siapkan_foto.py ASLI img/hero/profil.webp --jenis hero             # 1920 + -hp 960
-python3 tools/siapkan_foto.py ASLI img/kkt/230211060074.webp --jenis potret      # 3:4, 600 × 800
+python3 ../kelurahan-lahendong-tools/siapkan_foto.py ASLI img/wisata/<kode>/kartu.webp --jenis kartu    # 3:2, 1200 × 800
+python3 ../kelurahan-lahendong-tools/siapkan_foto.py ASLI img/wisata/<kode>/foto-3.webp --jenis galeri  # sisi terpanjang 1600
+python3 ../kelurahan-lahendong-tools/siapkan_foto.py ASLI img/hero/profil.webp --jenis hero             # 1920 + -hp 960
+python3 ../kelurahan-lahendong-tools/siapkan_foto.py ASLI img/kkt/230211060074.webp --jenis potret      # 3:4, 600 × 800
 
 # Video latar (versi 1920 px, HP 1280 px "-hp", poster; tanpa suara; sambungan perulangan dibaurkan)
-python3 tools/siapkan_video.py ASLI.mp4 img/hero/beranda
-python3 tools/siapkan_video.py ASLI.mp4 img/wisata/<kode>/latar --crf 31   # video ramai gerak (drone)
+python3 ../kelurahan-lahendong-tools/siapkan_video.py ASLI.mp4 img/hero/beranda
+python3 ../kelurahan-lahendong-tools/siapkan_video.py ASLI.mp4 img/wisata/<kode>/latar --crf 31   # video ramai gerak (drone)
 ```
 
 `pasang_foto.py` hanya menimpa berkas yang sudah ada, jadi nama yang salah ketik dilaporkan sebagai
@@ -361,7 +373,7 @@ Contoh: kolom `instagram` di tab `wisata`.
    ${item.instagram ? `<p>@${item.instagram}</p>` : ""}
    ```
 4. Tambahkan kolom yang sama di baris judul Google Sheet. Urutan kolom bebas; namanya yang penting.
-5. `python3 tools/buat_template.py`.
+5. `python3 ../kelurahan-lahendong-tools/buat_template.py`.
 
 ### Menambah tab dan seksi baru
 
@@ -394,14 +406,14 @@ Contoh: tab `agenda` berisi kegiatan kelurahan, tampil di Beranda.
 ### Menambah destinasi wisata
 
 Buat folder `img/wisata/<kode>/`, daftarkan di `DESTINASI`, tambahkan barisnya di `data-contoh.js`, lalu jalankan
-`tools/buat_template.py` agar dropdown `nama` di tab `wisata` ikut memuatnya. Admin lalu mengisi barisnya di sheet.
+`../kelurahan-lahendong-tools/buat_template.py` agar dropdown `nama` di tab `wisata` ikut memuatnya. Admin lalu mengisi barisnya di sheet.
 
 ### Mengganti nama destinasi
 
 Kode destinasi berasal dari namanya di sheet, jadi nama yang diganti tidak lagi cocok dengan `DESTINASI` dan
 barisnya tidak tampil (Cek Data menandainya). Ganti kunci `DESTINASI` dan nama foldernya (`git mv`) ke kode baru,
 catat `"kode-lama": "kode-baru"` di `KODE_LAMA` (`komponen.js`) agar nama lama di sheet dan tautan `?id=` lama tetap
-berlaku, ubah `nama` di `data-contoh.js`, lalu jalankan `tools/buat_template.py`. Dropdown di sheet live tidak ikut
+berlaku, ubah `nama` di `data-contoh.js`, lalu jalankan `../kelurahan-lahendong-tools/buat_template.py`. Dropdown di sheet live tidak ikut
 berubah; perbarui validasinya bila perlu (Data → Validasi data).
 
 > Jangan mengganti nama kolom pertama (`nama`, `jabatan`, `kunci`, …) atau nama tab tanpa mengubah `SKEMA` di
@@ -438,7 +450,7 @@ berubah; perbarui validasinya bila perlu (Data → Validasi data).
 GitHub Pages menerbitkan cabang `main` apa adanya; setiap push ke `main` menjadi versi situs baru dalam 1–2 menit.
 
 ```bash
-python3 tools/versi_aset.py   # penanda versi baru untuk CSS/JS yang berubah
+python3 ../kelurahan-lahendong-tools/versi_aset.py   # penanda versi baru untuk CSS/JS yang berubah
 git add -A
 git commit -m "feat: tambah tab agenda"
 git push
@@ -451,7 +463,7 @@ Urutan aman saat perubahan menyentuh sheet dan kode sekaligus:
 
 - **Menambah kolom/tab**: kode dulu atau sheet dulu sama-sama aman (kolom yang belum ada terbaca kosong).
 - **Mengganti nama kolom/tab**: siapkan keduanya, ubah sheet, lalu segera push kode.
-- **Setelah mengubah `SKEMA` atau data contoh**: `python3 tools/buat_template.py`.
+- **Setelah mengubah `SKEMA` atau data contoh**: `python3 ../kelurahan-lahendong-tools/buat_template.py`.
 
 Semua path di situs **relatif** (tanpa garis miring di depan, mis. `img/logo/logo.svg`), sehingga situs jalan di
 akar domain (`kelurahan-lahendong.github.io/`) maupun di sub-folder (`…github.io/web-lahendong/`, atau saat dibuka
@@ -465,9 +477,9 @@ Alamat sekarang `https://kelurahan-lahendong.github.io/` (repo `kelurahan-lahend
 di-rename/dipindah, jadi tautan lama yang sudah tersebar akan 404. Untuk menjaganya tetap jalan:
 
 1. Di akun lama, buat repo publik baru bernama `web-lahendong`.
-2. Salin isi `tools/pengalihan-url-lama/` (`index.html` dan `404.html`) ke akar repo itu, lalu aktifkan Pages
+2. Salin isi `../kelurahan-lahendong-tools/pengalihan-url-lama/` (`index.html` dan `404.html`) ke akar repo itu, lalu aktifkan Pages
    (Settings → Pages → Deploy from branch → `main` / root).
 3. Setiap alamat lama diteruskan ke halaman yang sama di alamat baru, termasuk `?id=…` dan `#…`
    (mis. `…/web-lahendong/layanan.html#surat-keterangan-domisili` → `kelurahan-lahendong.github.io/layanan.html#surat-keterangan-domisili`).
 
-Alamat situs untuk tab `petunjuk` spreadsheet ada di `ALAMAT_SITUS` (`tools/buat_template.py`).
+Alamat situs untuk tab `petunjuk` spreadsheet ada di `ALAMAT_SITUS` (`../kelurahan-lahendong-tools/buat_template.py`).

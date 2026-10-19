@@ -16,13 +16,13 @@
    kartu : foto kartu di halaman Wisata & Beranda, 3:2 (mis. 1200 × 800 px).
    latar : latar kop halaman detail — foto 16:9 (mis. 1920 × 1080 px), atau video yang diputar
            berulang tanpa suara: { berkas: "latar.mp4", hp: "latar-hp.mp4", poster: "latar.webp" }.
-           Ketiga berkas video dibuat sekaligus oleh: python3 tools/siapkan_video.py ASLI.mp4 img/wisata/<kode>/latar
+           Ketiga berkas video dibuat sekaligus oleh: python3 ../kelurahan-lahendong-tools/siapkan_video.py ASLI.mp4 img/wisata/<kode>/latar
    media : foto & video bagian galeri halaman detail, berurutan. Rasio bebas (lanskap maupun potret).
            Video sebaiknya diberi poster. keterangan (opsional) tampil saat media diperbesar.
    Jenis media dikenali dari akhiran: .mp4 / .webm = video, selain itu foto.
    Saran video: kamera diam atau bergerak pelan, 10–30 detik.
    Menambah destinasi: buat foldernya, daftarkan di sini, tambahkan barisnya di data-contoh.js,
-   lalu buat ulang template (python3 tools/buat_template.py) agar muncul di dropdown nama. */
+   lalu buat ulang template (python3 ../kelurahan-lahendong-tools/buat_template.py) agar muncul di dropdown nama. */
 const DESTINASI = {
   "danau-linow": {
     kartu: "kartu.webp",
